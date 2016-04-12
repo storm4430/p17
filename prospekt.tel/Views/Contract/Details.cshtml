@@ -1,0 +1,56 @@
+﻿<div class="panel panel-default">
+    <div class="panel-heading">
+        <span class="panel-title" id="cd-info"></span>
+        <div class="btn-group" role="group" aria-label="..." style="padding-left:25px" id="cd-actions">
+            <button type="button" data-id="1" class="btn btn-xs btn-default"><span class="fa fa-upload fa-fw"></span>   Загрузить скан</button>
+            <button type="button" data-id="5" class="btn btn-xs btn-default" id="cd-accept"><span class="fa fa-check fa-fw"></span>   Провести</button>
+            <button type="button" data-id="2" class="btn btn-xs btn-default"><span class="fa fa-dedent fa-fw"></span>   Разорвать</button>
+            <button type="button" data-id="3" class="btn btn-xs btn-default"><span class="fa fa-location-arrow fa-fw"></span>   Продлить</button>
+            <button type="button" data-id="4" class="btn btn-xs btn-default"><span class="fa fa-dollar fa-fw"></span>   Товар реализован</button>
+        </div>
+    </div>
+    <div class="panel-body">
+        <table class="table table-condensed">
+            <tr>
+                <td class="contractHeader"><strong>Продавец:</strong></td>
+                <td class="contractHeader italic" id="cd-Seller"></td>
+                <td class="contractHeader"><strong>Номер договора:</strong></td>
+                <td class="contractHeader italic" id="cd-ContractNumber"></td>
+            </tr>
+            <tr>
+                <td class="contractHeader"><strong>Товар:</strong></td>
+                <td class="contractHeader italic" id="cd-Product"></td>
+                <td class="contractHeader"><strong>Сумма договора:</strong></td>
+                <td class="contractHeader italic" id="cd-Summa"></td>
+            </tr>
+            <tr>
+                <td class="contractHeader"><strong>Серийный номер</strong></td>
+                <td class="contractHeader italic" id="cd-Serial"></td>
+                <td class="contractHeader"><strong>Дата договора</strong></td>
+                <td class="contractHeader italic" id="cd-ContactDate"></td>
+            </tr>
+            <tr>
+                <td class="contractHeader"><strong>Комментарий к договору</strong></td>
+                <td class="contractHeader italic" id="cd-Comment"></td>
+                <td class="contractHeader"><strong>Дата возврата</strong></td>
+                <td class="contractHeader italic" id="cd-EstimateDate"></td>
+            </tr>
+            <tr>
+                <td class="contractHeader"><strong>Скан договора</strong></td>
+                <td class="contractHeader italic" id="cd-OrderScan"></td>
+                <td class="contractHeader"><strong>Дата разрыва договора</strong></td>
+                <td class="contractHeader italic" id="cd-EstimateDate"></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        ContractDetails.GetContractDetails('@ViewBag.Id');
+        $('#cd-actions button').click(function () {
+            ContractDetails.ContactDetailsAction($(this).data('id'), '@ViewBag.Id');
+        })
+    })
+</script>

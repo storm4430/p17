@@ -1,0 +1,56 @@
+﻿@*@using Microsoft.AspNet.Identity
+    @if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+        @Html.AntiForgeryToken()
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                @Html.ActionLink("Здравствуйте, " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            </li>
+            <li><a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
+        </ul>
+        }
+    }
+    else
+    {
+        <ul class="nav navbar-nav navbar-right">
+            <li>@Html.ActionLink("Регистрация", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            <li>@Html.ActionLink("Выполнить вход", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        </ul>
+    }*@
+
+
+<ul class="dropdown-menu dropdown-user">
+    <li>
+        <a href=""><i class="fa fa-user fa-fw"></i> Профиль</a>
+    </li>
+    <li>
+        <a href="#"><i class="fa fa-lock fa-fw"></i> Блокировка</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+        @*@Html.AntiForgeryToken()*@
+        <a id="logoutlink" href=""><i class="fa fa-sign-out fa-fw"></i> Выход</a>
+    </li>
+</ul>
+
+<script>
+    window.onload = function () {
+        $("#logoutlink").click(function (e) {
+            $.ajax({
+                url: "/Account/LogOff",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                success: function () {
+                    console.log('Вышли!')
+                    document.location.href = "/";
+                }
+            });
+            e.preventDefault();
+        });
+    }
+
+</script>
+

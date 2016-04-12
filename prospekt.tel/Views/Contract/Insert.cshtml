@@ -1,0 +1,183 @@
+﻿<style>
+    .gre {
+        max-width: none;
+    }
+</style>
+<div class="row" style="font-size:18px; text-align:center">
+    <button class="btn btn-primary btn-circle" id="frst">1</button>
+    <button class="btn btn-default btn-circle" id="scnd">2</button>
+    <button class="btn btn-default btn-circle" id="thrd">3</button>
+</div>
+<hr />
+<div class="row">
+    <form>
+        <div class="col-md-12" id="newOrder">
+            <div class="form-group">
+                @*<span class="input-group-addon"><strong>Контрагент</strong></span>*@
+                <input class="form-control gre twitter-typeahead" id="personContract" type="text" placeholder="Контрагент" autofocus/>
+            </div>
+            <div class="form-group">
+                @*<span class="input-group-addon"><strong>Товар</strong></span>*@
+                <input class="form-control gre twitter-typeahead" id="productContract" type="text" placeholder="Товар" />
+            </div>
+            <div class="form-group input-group">
+                <span class="input-group-addon"><strong>Дата заключения договора</strong></span>
+                <input type="date" class="form-control gre" id="order_date" title="" required/>
+            </div>
+            <div class="form-group input-group">
+                <span class="input-group-addon"><strong>Серийный номер</strong></span>
+                <input class="form-control gre" type="text" id="product_serial" placeholder="Серийный номер" required/>
+            </div>
+            <hr />
+            <div class="pull-right" >
+                <button class="btn btn-success btn-xs" id="firststep">Дальше  <i class="fa fa-forward fa-fw"></i> </button>
+            </div>
+        </div>
+        <div class="col-md-12" id="secondStage" hidden>
+            <div class="form-group input-group">
+                <span class="input-group-addon"><strong>Сумма договора</strong></span>
+                <input class="form-control gre" id="summContract" type="number" step="1" placeholder="Сумма договора" required/>
+                @*<span class="glyphicon glyphicon-ruble form-control-feedback"></span>*@
+            </div>
+            <div class="form-group input-group">
+                <span class="input-group-addon"><strong>Дата окончания договора</strong></span>
+                <input type="date" class="form-control gre" id="estimatedDateContract" title="Дата окончания договора" required/>
+                @*<span class="glyphicon glyphicon-calendar form-control-feedback"></span>*@
+            </div>
+            <div class="form-group input-group">
+                <span class="input-group-addon"><strong>Особые отметки</strong></span>
+                <textarea type="date" class="form-control gre" id="otmetki" title="Особые отметки" />
+                @*<span class="glyphicon glyphicon-calendar form-control-feedback"></span>*@
+            </div>
+            @*<button class="btn btn-sm btn-link" id="ic-preparecontract"><i class="fa fa-file-word-o fa-fw"></i>Подготовить договор</button>*@
+            <hr />
+            <div class="pull-left">
+                <button class="btn btn-success btn-xs" id="backtofirststep"><i class="fa fa-backward fa-fw"></i> Назад</button>
+            </div>
+            <div class="pull-right">
+                <button class="btn btn-success btn-xs" id="ic-preparecontract">Подготовить договор  <i class="fa fa-file-word-o fa-fw"></i> </button>
+            </div>
+        </div>
+        <div id="thirdStage" hidden>
+            <div class="col-md-12">
+                <div class="col-md-2" style="font-size:56px">
+                    <span class="fa fa-exclamation-triangle"></span>     
+                </div>
+                <div class="col-md-10 alert alert-info" role="alert">
+                   <p> Договор отправлен на формирование, но ещё не заключён. После заключения договора необходимо прикрепить скан договора с подписью продавца в карточке договора.
+                       </p>
+                    <p>
+                        На текущий момент в кассе находится <strong>0.00 рублей.</strong>
+                    </p>
+                    <p>
+                        После заключения договора <strong>0.00 рублей.</strong>
+                    </p>
+                </div>
+                <div class="pull-left">
+                    <button class="btn btn-success btn-xs" id="backtosecondstep"><i class="fa fa-backward fa-fw"></i> Назад</button>
+                </div>
+                <div class="pull-right">
+                    <button class="btn btn-success btn-xs" id="ic-finishcontract"><i class="fa fa-check fa-fw"></i>      Заключить договор   </button>
+                </div>
+            </div>
+            
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#personContract').focus();
+
+        TypeAhead.init('#personContract', '/api/persons/?substr=%QUERY', 3, 20, 'PersonsPK',
+                    {
+                        handlebars: '<span class="fa fa-user fa-fw"></span>{{fam}} {{im}} {{ot}} {{birthday}} г.р.'
+                    }, [
+                          '<div class="empty-message">',
+                          '<div class="alert alert-danger" role="alert" style="margin:5px"><span class="fa fa-exclamation-circle fa-fw"></span>Поиск не вернул результатов</div>',
+                    ].join('\n'),
+                    function (event, data) {
+                        $('#personContract').attr('data-id', data.id);
+                        if ($('#personContract').closest('div').hasClass('has-error')) {
+                            $('#personContract').closest('div').removeClass('has-error')
+                        }
+                        $('#productContract').focus();
+                    });
+
+        TypeAhead.init('#productContract', '/api/products/?substr=%QUERY', 1, 20, 'id',
+                            {
+                                handlebars: '<span class="fa fa-laptop fa-fw"></span>{{fullProductName}} '
+                            }, [
+                                  '<div class="empty-message">',
+                                  '<div class="alert alert-danger" role="alert" style="margin:5px"><span class="fa fa-exclamation-circle fa-fw"></span>Поиск не вернул результатов</div>',
+                                  '<button class="btn btn-link" onclick="PersonCreate()"><span class="fa fa-plus fa-fw"></span>Добавить контрагента</button>',
+                                  '</div>'
+                            ].join('\n'),
+                            function (event, data) {
+                                $('#productContract').attr('data-id', data.id);
+                                if ($('#productContract').closest('div').hasClass('has-error')) {
+                                    $('#productContract').closest('div').removeClass('has-error')
+                                };
+                                $('#order_date').focus();
+                            });
+
+        $('#newOrder input').keyup(function (e) {
+            if (e.keyCode == '27') {
+                $(this).val('');
+            };
+        });
+
+        
+
+        $('#firststep').click(function (e) {
+            e.preventDefault();
+            $('#newOrder').slideToggle(100);
+            $('#secondStage').slideToggle(100);
+            $('#frst').removeClass('btn-primary').addClass('btn-default');
+            $('#scnd').removeClass('btn-default').addClass('btn-primary');
+            $('#summContract').focus();
+        });
+        $('#backtofirststep').click(function (e) {
+            e.preventDefault();
+            $('#secondStage').slideToggle(100);
+            $('#newOrder').slideToggle(100);
+
+            $('#scnd').removeClass('btn-primary').addClass('btn-default');
+            $('#frst').removeClass('btn-default').addClass('btn-primary');
+            
+        });
+
+        $('#backtosecondstep').click(function (e) {
+            e.preventDefault();
+            $('#thirdStage').slideToggle(100);
+            $('#secondStage').slideToggle(100);
+
+            $('#thrd').removeClass('btn-primary').addClass('btn-default');
+            $('#scnd').removeClass('btn-default').addClass('btn-primary');
+
+        });
+
+        $('#order_date').change(function () {
+            var td = new Date($(this).val());
+            td.setDate(td.getDate() + 10);
+            var yyyy = td.getFullYear().toString();
+            var mm = (td.getMonth() + 1).toString(); // getMonth() is zero-based
+            var dd = td.getDate().toString();
+            var etd = yyyy + "-" + (mm[1] ? mm : "0" + mm[0]) + "-" + (dd[1] ? dd : "0" + dd[0]);
+            $('#estimatedDateContract').val(etd);
+        })
+
+        $('#ic-preparecontract').click(function (e) {
+            e.preventDefault();
+            PrepareContract();
+        });
+
+        $('#order_date').val(ShowCurrentDate).change();
+
+        $('#ic-finishcontract').off().click(function () {
+
+        });
+    });
+</script>
+
+
+

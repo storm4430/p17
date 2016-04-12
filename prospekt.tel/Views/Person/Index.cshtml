@@ -1,0 +1,53 @@
+﻿@*<div class="col-md-offset-2 col-md-8" id="fioSearcher">
+        <input id="fioSearch" class="typeahead form-control" type="text" placeholder="Введите поисковый запрос" style="width:100%; max-width:none;">
+    </div>*@
+<div class="row" id="persCont" style="overflow-y:scroll;">
+    <div class="col-xs-12">
+        <div class="col-xs-12">
+            <input id="ccc" class="typeahead form-control input-sm" style="width:100%; max-width:none; margin:5px" />
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="col-xs-12" id="persCard">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#persCont').height($('#page-wrapper').height());
+        //var letters = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ж', 'З', 'И', 'К', 'Л', 'М', 'Н', 'О', 'П',
+        //'Р', 'С', 'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Э', 'Ю', 'Я'];
+        //$.each(letters, function (key, item) {
+        //    $('#lettersZone').append('<button class="btn btn-xs btn-default btn-circle">' + item + '</button>');
+        //});
+        $('#ccc').keyup(function (e) {
+            
+            if (e.keyCode == 27)
+            {
+                console.log(e.keyCode)
+                $(this).val('');
+            }
+        })
+        TypeAhead.init('#ccc', '/api/persons/?substr=%QUERY', 3, 20, 'PersonsPK',
+            {
+                handlebars: '<span class="fa fa-user fa-fw"></span>{{fam}} {{im}} {{ot}} {{birthday}} г.р.'
+            }, [
+                  '<div class="empty-message">',
+                  '<div class="alert alert-danger" role="alert" style="margin:5px"><span class="fa fa-exclamation-circle fa-fw"></span>Поиск не вернул результатов</div>',
+                  '<button class="btn btn-link" onclick="PersonCreate()"><span class="fa fa-plus fa-fw"></span>Добавить контрагента</button>',
+                  '</div>'
+            ].join('\n'),
+            function (event, data) {
+                var personsPK = data.id;
+
+                $.get('/person/details/' + personsPK, function (pdata) {
+                    $('#persCard').empty().html(pdata).fadeIn("fast");
+                });
+            });
+    });
+</script>

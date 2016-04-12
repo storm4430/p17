@@ -1,0 +1,26 @@
+[
+  {
+    "outputFileName": "Scripts/App/categories.js",
+    "inputFiles": [
+      "Scripts/App/categories.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/App/DataTable.js",
+    "inputFiles": [
+      "Scripts/App/DataTable.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/App/int.navigation.js",
+    "inputFiles": [
+      "Scripts/App/int.navigation.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/Site.css",
+    "inputFiles": [
+      "Content/Site.css"
+    ]
+  }
+]

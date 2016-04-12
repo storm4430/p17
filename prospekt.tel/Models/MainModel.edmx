@@ -1,0 +1,821 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище popshopModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sex">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="created" Type="datetime" Nullable="false" />
+          <Property Name="updated" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Function Name="usp_Contracts_IU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="personPK" Type="int" Mode="In" />
+          <Parameter Name="productPK" Type="int" Mode="In" />
+          <Parameter Name="order_sum" Type="numeric" Mode="In" />
+          <Parameter Name="order_date" Type="datetime" Mode="In" />
+          <Parameter Name="estimated_close" Type="datetime" Mode="In" />
+          <Parameter Name="product_serial" Type="varchar" Mode="In" />
+          <Parameter Name="contract_comment" Type="varchar" Mode="In" />
+          <Parameter Name="order_org" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="usp_Ctegories_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_Ctegories_IU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="category_desc" Type="varchar" Mode="In" />
+          <Parameter Name="createdBy" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_GetAllCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="substr" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_GetAllContracts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="orgId" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="substr" Type="varchar(max)" Mode="In" />
+          <Parameter Name="stage" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_GetAllOrgs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="substr" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_GetAllProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="scat" Type="int" Mode="In" />
+          <Parameter Name="substr" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_GetAllProducts_sel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="substr" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_GetAllSubCategoriesByCategoryID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="catId" Type="int" Mode="In" />
+          <Parameter Name="substr" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_GetCategoryById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_GetContractById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_GetContractPrepare" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_GetOrderScan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_GetPerson" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="fam" Type="varchar" Mode="In" />
+          <Parameter Name="im" Type="varchar" Mode="In" />
+          <Parameter Name="ot" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_GetPersonById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_GetPersonFIOLetters" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin" />
+        <Function Name="usp_GetPersonPassScan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_GetPersonPhoto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_GetPrintConractById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_GetProductById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_GetSex" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin" />
+        <Function Name="usp_GetSubCategoryById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_OrdersScanUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="orderId" Type="int" Mode="In" />
+          <Parameter Name="scanPath" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_Orgs_IU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="orgName" Type="varchar" Mode="In" />
+          <Parameter Name="orgINN" Type="varchar" Mode="In" />
+          <Parameter Name="orgOGRN" Type="varchar" Mode="In" />
+          <Parameter Name="orgAdress" Type="varchar" Mode="In" />
+          <Parameter Name="orgRukFam" Type="varchar" Mode="In" />
+          <Parameter Name="orgRukIm" Type="varchar" Mode="In" />
+          <Parameter Name="orgRukOt" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_Persons_IU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="fam" Type="varchar" Mode="In" />
+          <Parameter Name="im" Type="varchar" Mode="In" />
+          <Parameter Name="ot" Type="varchar" Mode="In" />
+          <Parameter Name="sex" Type="int" Mode="In" />
+          <Parameter Name="birthday" Type="datetime" Mode="In" />
+          <Parameter Name="person_adres" Type="varchar" Mode="In" />
+          <Parameter Name="person_comment" Type="varchar" Mode="In" />
+          <Parameter Name="person_photo" Type="varchar(max)" Mode="In" />
+          <Parameter Name="person_passport" Type="varchar(max)" Mode="In" />
+          <Parameter Name="passport_serie" Type="varchar" Mode="In" />
+          <Parameter Name="passport_num" Type="varchar" Mode="In" />
+          <Parameter Name="passport_vidacha" Type="varchar" Mode="In" />
+          <Parameter Name="cellPhone" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_Photos_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="photoPath" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_Products_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="user" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_Products_IU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="catId" Type="int" Mode="In" />
+          <Parameter Name="subCatId" Type="int" Mode="In" />
+          <Parameter Name="productName" Type="varchar" Mode="In" />
+          <Parameter Name="createdBy" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_Scans_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="scanPath" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_SetAgreenmentToOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="path" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_SubCategories_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="user" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_SubCategories_IU" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="catId" Type="int" Mode="In" />
+          <Parameter Name="subcategory_desc" Type="varchar" Mode="In" />
+          <Parameter Name="createdBy" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_GetAllUserRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_GetAllUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Substr" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="Хранилище popshopModelContainer">
+          <EntitySet Name="sex" EntityType="Self.sex" Schema="admin" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="popshopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sex">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updated" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="psEnt" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sex" EntityType="Self.sex" />
+          <FunctionImport Name="usp_GetAllCategories" ReturnType="Collection(popshopModel.usp_GetAllCategories_Result)" >
+          <Parameter Name="substr" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_Ctegories_IU">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="category_desc" Mode="In" Type="String" />
+            <Parameter Name="createdBy" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_Ctegories_Delete">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetCategoryById" ReturnType="Collection(popshopModel.usp_GetCategoryById_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetAllSubCategoriesByCategoryID" ReturnType="Collection(popshopModel.usp_GetAllSubCategoriesByCategoryID_Result)">
+            <Parameter Name="catId" Mode="In" Type="Int32" />
+            <Parameter Name="substr" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetSubCategoryById" ReturnType="Collection(popshopModel.usp_GetSubCategoryById_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_SubCategories_IU">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="catId" Mode="In" Type="Int32" />
+            <Parameter Name="subcategory_desc" Mode="In" Type="String" />
+            <Parameter Name="createdBy" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_SubCategories_Delete">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="user" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetAllProducts" ReturnType="Collection(popshopModel.usp_GetAllProducts_Result)">
+            <Parameter Name="scat" Mode="In" Type="Int32" />
+            <Parameter Name="substr" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_Products_IU">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="catId" Mode="In" Type="Int32" />
+            <Parameter Name="subCatId" Mode="In" Type="Int32" />
+            <Parameter Name="productName" Mode="In" Type="String" />
+            <Parameter Name="createdBy" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetProductById" ReturnType="Collection(popshopModel.usp_GetProductById_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_Products_Delete">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="user" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetPersonFIOLetters" ReturnType="Collection(String)" />
+          <FunctionImport Name="usp_GetPerson" ReturnType="Collection(popshopModel.usp_GetPerson_Result)">
+            <Parameter Name="fam" Mode="In" Type="String" />
+            <Parameter Name="im" Mode="In" Type="String" />
+            <Parameter Name="ot" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_Persons_IU">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="fam" Mode="In" Type="String" />
+            <Parameter Name="im" Mode="In" Type="String" />
+            <Parameter Name="ot" Mode="In" Type="String" />
+            <Parameter Name="sex" Mode="In" Type="Int32" />
+            <Parameter Name="birthday" Mode="In" Type="DateTime" />
+            <Parameter Name="person_adres" Mode="In" Type="String" />
+            <Parameter Name="person_comment" Mode="In" Type="String" />
+            <Parameter Name="person_photo" Mode="In" Type="String" />
+            <Parameter Name="person_passport" Mode="In" Type="String" />
+            <Parameter Name="passport_serie" Mode="In" Type="String" />
+            <Parameter Name="passport_num" Mode="In" Type="String" />
+            <Parameter Name="passport_vidacha" Mode="In" Type="String" />
+            <Parameter Name="cellPhone" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetSex" ReturnType="Collection(popshopModel.usp_GetSex_Result)" />
+          <FunctionImport Name="usp_GetPersonById" ReturnType="Collection(popshopModel.usp_GetPersonById_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetPersonPhoto" ReturnType="Collection(String)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetPersonPassScan" ReturnType="Collection(String)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_Photos_Update">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="photoPath" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_Scans_Update">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="scanPath" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetAllUsers" ReturnType="Collection(popshopModel.usp_GetAllUsers_Result)">
+          <Parameter Name="Substr" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_Orgs_IU">
+            <Parameter Name="id" Mode="In" Type="Guid" />
+            <Parameter Name="orgName" Mode="In" Type="String" />
+            <Parameter Name="orgINN" Mode="In" Type="String" />
+            <Parameter Name="orgOGRN" Mode="In" Type="String" />
+            <Parameter Name="orgAdress" Mode="In" Type="String" />
+            <Parameter Name="orgRukFam" Mode="In" Type="String" />
+            <Parameter Name="orgRukIm" Mode="In" Type="String" />
+            <Parameter Name="orgRukOt" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetAllOrgs" ReturnType="Collection(popshopModel.usp_GetAllOrgs_Result)">
+          <Parameter Name="substr" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetAllContracts" ReturnType="Collection(popshopModel.usp_GetAllContracts_Result)">
+            <Parameter Name="orgId" Mode="In" Type="Guid" />
+            <Parameter Name="substr" Mode="In" Type="String" />
+            <Parameter Name="stage" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetAllProducts_sel" ReturnType="Collection(popshopModel.usp_GetAllProducts_sel_Result)">
+          <Parameter Name="substr" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetAllUserRoles" ReturnType="Collection(popshopModel.usp_GetAllUserRoles_Result)" />
+          <FunctionImport Name="usp_Contracts_IU" ReturnType="Collection(Int32)">
+            <Parameter Name="id" Mode="In" Type="Guid" />
+            <Parameter Name="personPK" Mode="In" Type="Int32" />
+            <Parameter Name="productPK" Mode="In" Type="Int32" />
+            <Parameter Name="order_sum" Mode="In" Type="Decimal" />
+            <Parameter Name="order_date" Mode="In" Type="DateTime" />
+            <Parameter Name="estimated_close" Mode="In" Type="DateTime" />
+            <Parameter Name="product_serial" Mode="In" Type="String" />
+            <Parameter Name="contract_comment" Mode="In" Type="String" />
+            <Parameter Name="order_org" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetContractPrepare" ReturnType="Collection(popshopModel.usp_GetContractPrepare_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetConractById" ReturnType="Collection(popshopModel.usp_GetConractById_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_SetAgreenmentToOrder">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="path" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetPrintConractById" ReturnType="Collection(popshopModel.usp_GetPrintConractById_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetContractById" ReturnType="Collection(popshopModel.usp_GetContractById_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetOrderScan" ReturnType="Collection(String)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_OrdersScanUpdate" ReturnType="Collection(Int32)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="orderId" Mode="In" Type="Int32" />
+            <Parameter Name="scanPath" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="usp_GetAllCategories_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="category_desc" Nullable="false" MaxLength="120" />
+          <Property Type="String" Name="created" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="updated" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="createdBy" Nullable="false" MaxLength="60" />
+        </ComplexType>
+        <ComplexType Name="usp_GetCategoryById_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="category_desc" Nullable="false" MaxLength="120" />
+          <Property Type="String" Name="created" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="updated" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="createdBy" Nullable="false" MaxLength="60" />
+        </ComplexType>
+        <ComplexType Name="usp_GetAllSubCategoriesByCategoryID_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="created" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="updated" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="createdBy" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="subcategory_desc" Nullable="false" MaxLength="120" />
+          <Property Type="String" Name="category_desc" Nullable="false" MaxLength="120" />
+        </ComplexType>
+        <ComplexType Name="usp_GetSubCategoryById_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="Int32" Name="catId" Nullable="true" />
+          <Property Type="String" Name="category_desc" Nullable="true" MaxLength="120" />
+          <Property Type="String" Name="subcategory_desc" Nullable="false" MaxLength="120" />
+          <Property Type="String" Name="created" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="updated" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="createdBy" Nullable="false" MaxLength="60" />
+        </ComplexType>
+        <ComplexType Name="usp_GetAllProducts_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="product_name" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="category_desc" Nullable="true" MaxLength="120" />
+          <Property Type="String" Name="subcategory_desc" Nullable="true" MaxLength="120" />
+          <Property Type="String" Name="created" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="updated" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="createdBy" Nullable="false" MaxLength="60" />
+          <Property Type="Int32" Name="catId" Nullable="true" />
+          <Property Type="Int32" Name="subcatId" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="usp_GetProductById_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="product_name" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="created" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="updated" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="createdBy" Nullable="false" MaxLength="60" />
+          <Property Type="Int32" Name="product_subcategory" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="usp_GetPerson_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="fam" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="im" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="ot" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="birthday" Nullable="true" MaxLength="11" />
+          <Property Type="String" Name="pers_photo" Nullable="false" MaxLength="512" />
+          <Property Type="String" Name="pass_scan" Nullable="false" MaxLength="512" />
+          <Property Type="Int32" Name="sex" Nullable="false" />
+          <Property Type="String" Name="sex_desc" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="passport_serie" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="passport_num" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="cellPhone" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="person_comment" Nullable="true" MaxLength="1024" />
+          <Property Type="DateTime" Name="dr" Nullable="false" Precision="23" />
+          <Property Type="String" Name="personAddres" Nullable="true" MaxLength="512" />
+          <Property Type="String" Name="passport_vidacha" Nullable="true" MaxLength="256" />
+        </ComplexType>
+        <ComplexType Name="usp_GetSex_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="description" Nullable="false" MaxLength="1" />
+        </ComplexType>
+        <ComplexType Name="usp_GetPersonById_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="fam" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="im" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="ot" Nullable="true" MaxLength="40" />
+          <Property Type="String" Name="birthday" Nullable="true" MaxLength="11" />
+          <Property Type="DateTime" Name="dr" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="sex" Nullable="false" />
+          <Property Type="String" Name="sex_desc" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="passport_serie" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="passport_num" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="cellPhone" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="person_comment" Nullable="true" MaxLength="1024" />
+          <Property Type="String" Name="pers_photo" Nullable="false" MaxLength="512" />
+          <Property Type="String" Name="pass_scan" Nullable="false" MaxLength="512" />
+          <Property Type="String" Name="created" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="updated" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="personAddres" Nullable="true" MaxLength="512" />
+          <Property Type="String" Name="passport_vidacha" Nullable="true" MaxLength="256" />
+        </ComplexType>
+        <ComplexType Name="usp_GetAllUsers_Result">
+          <Property Type="String" Name="id" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="FIO" Nullable="true" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="256" />
+          <Property Type="String" Name="orgName" Nullable="false" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="usp_GetAllOrgs_Result">
+          <Property Type="Guid" Name="id" Nullable="false" />
+          <Property Type="String" Name="orgName" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="orgAdress" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="orgINN" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="orgOGRN" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="created" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="updated" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="orgRukFam" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="orgRukIm" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="orgRukOt" Nullable="false" MaxLength="40" />
+          <Property Type="String" Name="orgRuk" Nullable="false" MaxLength="122" />
+        </ComplexType>
+        <ComplexType Name="usp_GetAllContracts_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="Int32" Name="personPK" Nullable="false" />
+          <Property Type="String" Name="FIO" Nullable="true" MaxLength="45" />
+          <Property Type="String" Name="orgName" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="productPK" Nullable="false" />
+          <Property Type="Decimal" Name="order_summ" Nullable="false" Precision="9" Scale="2" />
+          <Property Type="String" Name="order_date" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="estimated_close" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="agreement" Nullable="true" />
+          <Property Type="String" Name="created" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="updated" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="product_serial" Nullable="true" MaxLength="64" />
+          <Property Type="Int32" Name="isClosed" Nullable="false" />
+          <Property Type="String" Name="order_comment" Nullable="true" MaxLength="1024" />
+          <Property Type="Guid" Name="order_org" Nullable="false" />
+          <Property Type="String" Name="order_num" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="estimated_close_data" Nullable="false" />
+          <Property Type="String" Name="Stage" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="order_stage" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="usp_GetAllProducts_sel_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="fullProductName" Nullable="true" MaxLength="501" />
+        </ComplexType>
+        <ComplexType Name="usp_GetAllUserRoles_Result">
+          <Property Type="String" Name="Id" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+        </ComplexType>
+        <ComplexType Name="usp_GetContractPrepare_Result">
+          <Property Type="String" Name="orgruk" Nullable="false" MaxLength="122" />
+          <Property Type="String" Name="orgINN" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="orgOGRN" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="orgAdress" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="seller" Nullable="true" MaxLength="139" />
+          <Property Type="String" Name="passport_serie" Nullable="false" MaxLength="5" />
+          <Property Type="String" Name="passport_num" Nullable="false" MaxLength="6" />
+          <Property Type="String" Name="passport_vidacha" Nullable="true" MaxLength="256" />
+          <Property Type="String" Name="product_name" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="serialnum" Nullable="true" MaxLength="88" />
+          <Property Type="String" Name="order_comment" Nullable="true" MaxLength="1024" />
+          <Property Type="Decimal" Name="order_summ" Nullable="false" Precision="9" Scale="2" />
+          <Property Type="DateTime" Name="estimated_close" Nullable="false" Precision="23" />
+          <Property Type="String" Name="personAddres" Nullable="true" MaxLength="512" />
+          <Property Type="String" Name="cellPhone" Nullable="true" MaxLength="30" />
+          <Property Type="DateTime" Name="order_date" Nullable="false" Precision="23" />
+          <Property Type="String" Name="order_num" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="usp_GetConractById_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="Int32" Name="personPK" Nullable="false" />
+          <Property Type="Int32" Name="productPK" Nullable="false" />
+          <Property Type="Decimal" Name="order_summ" Nullable="false" Precision="9" Scale="2" />
+          <Property Type="DateTime" Name="order_date" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="estimated_close" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="agreement" Nullable="true" />
+          <Property Type="DateTime" Name="created" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="updated" Nullable="true" Precision="23" />
+          <Property Type="String" Name="product_serial" Nullable="true" MaxLength="64" />
+          <Property Type="Int32" Name="isClosed" Nullable="false" />
+          <Property Type="String" Name="order_comment" Nullable="true" MaxLength="1024" />
+          <Property Type="Guid" Name="order_org" Nullable="false" />
+          <Property Type="String" Name="order_num" Nullable="true" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="usp_GetPrintConractById_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="file_path" Nullable="false" MaxLength="512" />
+          <Property Type="Int32" Name="agreement_type" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="usp_GetContractById_Result">
+          <Property Type="String" Name="FIO" Nullable="true" MaxLength="71" />
+          <Property Type="String" Name="product_name" Nullable="false" MaxLength="255" />
+          <Property Type="String" Name="order_num" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="product_serial" Nullable="true" MaxLength="64" />
+          <Property Type="Decimal" Name="order_summ" Nullable="false" Precision="9" Scale="2" />
+          <Property Type="String" Name="order_date" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="estimated_close" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="order_comment" Nullable="true" MaxLength="1024" />
+          <Property Type="String" Name="path" Nullable="false" MaxLength="512" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище popshopModelContainer" CdmEntityContainer="psEnt">
+          <EntitySetMapping Name="sex">
+            <EntityTypeMapping TypeName="popshopModel.sex">
+              <MappingFragment StoreEntitySet="sex">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="updated" ColumnName="updated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetAllCategories" FunctionName="Хранилище popshopModel.usp_GetAllCategories">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_GetAllCategories_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="category_desc" ColumnName="category_desc" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="updated" ColumnName="updated" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_Ctegories_IU" FunctionName="Хранилище popshopModel.usp_Ctegories_IU" />
+          <FunctionImportMapping FunctionImportName="usp_Ctegories_Delete" FunctionName="Хранилище popshopModel.usp_Ctegories_Delete" />
+          <FunctionImportMapping FunctionImportName="usp_GetCategoryById" FunctionName="Хранилище popshopModel.usp_GetCategoryById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_GetCategoryById_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="category_desc" ColumnName="category_desc" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="updated" ColumnName="updated" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetAllSubCategoriesByCategoryID" FunctionName="Хранилище popshopModel.usp_GetAllSubCategoriesByCategoryID">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_GetAllSubCategoriesByCategoryID_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="updated" ColumnName="updated" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="subcategory_desc" ColumnName="subcategory_desc" />
+                <ScalarProperty Name="category_desc" ColumnName="category_desc" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetSubCategoryById" FunctionName="Хранилище popshopModel.usp_GetSubCategoryById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_GetSubCategoryById_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="catId" ColumnName="catId" />
+                <ScalarProperty Name="category_desc" ColumnName="category_desc" />
+                <ScalarProperty Name="subcategory_desc" ColumnName="subcategory_desc" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="updated" ColumnName="updated" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_SubCategories_IU" FunctionName="Хранилище popshopModel.usp_SubCategories_IU" />
+          <FunctionImportMapping FunctionImportName="usp_SubCategories_Delete" FunctionName="Хранилище popshopModel.usp_SubCategories_Delete" />
+          <FunctionImportMapping FunctionImportName="usp_GetAllProducts" FunctionName="Хранилище popshopModel.usp_GetAllProducts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_GetAllProducts_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
+                <ScalarProperty Name="category_desc" ColumnName="category_desc" />
+                <ScalarProperty Name="subcategory_desc" ColumnName="subcategory_desc" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="updated" ColumnName="updated" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="catId" ColumnName="catId" />
+                <ScalarProperty Name="subcatId" ColumnName="subcatId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_Products_IU" FunctionName="Хранилище popshopModel.usp_Products_IU" />
+          <FunctionImportMapping FunctionImportName="usp_GetProductById" FunctionName="Хранилище popshopModel.usp_GetProductById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_GetProductById_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="updated" ColumnName="updated" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="product_subcategory" ColumnName="product_subcategory" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_Products_Delete" FunctionName="Хранилище popshopModel.usp_Products_Delete" />
+          <FunctionImportMapping FunctionImportName="usp_GetPersonFIOLetters" FunctionName="Хранилище popshopModel.usp_GetPersonFIOLetters" />
+          <FunctionImportMapping FunctionImportName="usp_GetPerson" FunctionName="Хранилище popshopModel.usp_GetPerson">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_GetPerson_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fam" ColumnName="fam" />
+                <ScalarProperty Name="im" ColumnName="im" />
+                <ScalarProperty Name="ot" ColumnName="ot" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="pers_photo" ColumnName="pers_photo" />
+                <ScalarProperty Name="pass_scan" ColumnName="pass_scan" />
+                <ScalarProperty Name="sex" ColumnName="sex" />
+                <ScalarProperty Name="sex_desc" ColumnName="sex_desc" />
+                <ScalarProperty Name="passport_serie" ColumnName="passport_serie" />
+                <ScalarProperty Name="passport_num" ColumnName="passport_num" />
+                <ScalarProperty Name="cellPhone" ColumnName="cellPhone" />
+                <ScalarProperty Name="person_comment" ColumnName="person_comment" />
+                <ScalarProperty Name="dr" ColumnName="dr" />
+                <ScalarProperty Name="personAddres" ColumnName="personAddres" />
+                <ScalarProperty Name="passport_vidacha" ColumnName="passport_vidacha" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_Persons_IU" FunctionName="Хранилище popshopModel.usp_Persons_IU" />
+          <FunctionImportMapping FunctionImportName="usp_GetSex" FunctionName="Хранилище popshopModel.usp_GetSex">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_GetSex_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetPersonById" FunctionName="Хранилище popshopModel.usp_GetPersonById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_GetPersonById_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fam" ColumnName="fam" />
+                <ScalarProperty Name="im" ColumnName="im" />
+                <ScalarProperty Name="ot" ColumnName="ot" />
+                <ScalarProperty Name="birthday" ColumnName="birthday" />
+                <ScalarProperty Name="dr" ColumnName="dr" />
+                <ScalarProperty Name="sex" ColumnName="sex" />
+                <ScalarProperty Name="sex_desc" ColumnName="sex_desc" />
+                <ScalarProperty Name="passport_serie" ColumnName="passport_serie" />
+                <ScalarProperty Name="passport_num" ColumnName="passport_num" />
+                <ScalarProperty Name="cellPhone" ColumnName="cellPhone" />
+                <ScalarProperty Name="person_comment" ColumnName="person_comment" />
+                <ScalarProperty Name="pers_photo" ColumnName="pers_photo" />
+                <ScalarProperty Name="pass_scan" ColumnName="pass_scan" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="updated" ColumnName="updated" />
+                <ScalarProperty Name="personAddres" ColumnName="personAddres" />
+                <ScalarProperty Name="passport_vidacha" ColumnName="passport_vidacha" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetPersonPhoto" FunctionName="Хранилище popshopModel.usp_GetPersonPhoto" />
+          <FunctionImportMapping FunctionImportName="usp_GetPersonPassScan" FunctionName="Хранилище popshopModel.usp_GetPersonPassScan" />
+          <FunctionImportMapping FunctionImportName="usp_Photos_Update" FunctionName="Хранилище popshopModel.usp_Photos_Update" />
+          <FunctionImportMapping FunctionImportName="usp_Scans_Update" FunctionName="Хранилище popshopModel.usp_Scans_Update" />
+          <FunctionImportMapping FunctionImportName="usp_GetAllUsers" FunctionName="Хранилище popshopModel.usp_GetAllUsers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_GetAllUsers_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="orgName" ColumnName="orgName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_Orgs_IU" FunctionName="Хранилище popshopModel.usp_Orgs_IU" />
+          <FunctionImportMapping FunctionImportName="usp_GetAllOrgs" FunctionName="Хранилище popshopModel.usp_GetAllOrgs">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_GetAllOrgs_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="orgName" ColumnName="orgName" />
+                <ScalarProperty Name="orgAdress" ColumnName="orgAdress" />
+                <ScalarProperty Name="orgINN" ColumnName="orgINN" />
+                <ScalarProperty Name="orgOGRN" ColumnName="orgOGRN" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="updated" ColumnName="updated" />
+                <ScalarProperty Name="orgRukFam" ColumnName="orgRukFam" />
+                <ScalarProperty Name="orgRukIm" ColumnName="orgRukIm" />
+                <ScalarProperty Name="orgRukOt" ColumnName="orgRukOt" />
+                <ScalarProperty Name="orgRuk" ColumnName="orgRuk" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetAllContracts" FunctionName="Хранилище popshopModel.usp_GetAllContracts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_GetAllContracts_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="personPK" ColumnName="personPK" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="orgName" ColumnName="orgName" />
+                <ScalarProperty Name="productPK" ColumnName="productPK" />
+                <ScalarProperty Name="order_summ" ColumnName="order_summ" />
+                <ScalarProperty Name="order_date" ColumnName="order_date" />
+                <ScalarProperty Name="estimated_close" ColumnName="estimated_close" />
+                <ScalarProperty Name="agreement" ColumnName="agreement" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="updated" ColumnName="updated" />
+                <ScalarProperty Name="product_serial" ColumnName="product_serial" />
+                <ScalarProperty Name="isClosed" ColumnName="isClosed" />
+                <ScalarProperty Name="order_comment" ColumnName="order_comment" />
+                <ScalarProperty Name="order_org" ColumnName="order_org" />
+                <ScalarProperty Name="order_num" ColumnName="order_num" />
+                <ScalarProperty Name="estimated_close_data" ColumnName="estimated_close_data" />
+                <ScalarProperty Name="Stage" ColumnName="Stage" />
+                <ScalarProperty Name="order_stage" ColumnName="order_stage" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetAllProducts_sel" FunctionName="Хранилище popshopModel.usp_GetAllProducts_sel">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_GetAllProducts_sel_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fullProductName" ColumnName="fullProductName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetAllUserRoles" FunctionName="Хранилище popshopModel.usp_GetAllUserRoles">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_GetAllUserRoles_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_Contracts_IU" FunctionName="Хранилище popshopModel.usp_Contracts_IU" />
+          <FunctionImportMapping FunctionImportName="usp_GetContractPrepare" FunctionName="Хранилище popshopModel.usp_GetContractPrepare">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_GetContractPrepare_Result">
+                <ScalarProperty Name="orgruk" ColumnName="orgruk" />
+                <ScalarProperty Name="orgINN" ColumnName="orgINN" />
+                <ScalarProperty Name="orgOGRN" ColumnName="orgOGRN" />
+                <ScalarProperty Name="orgAdress" ColumnName="orgAdress" />
+                <ScalarProperty Name="seller" ColumnName="seller" />
+                <ScalarProperty Name="passport_serie" ColumnName="passport_serie" />
+                <ScalarProperty Name="passport_num" ColumnName="passport_num" />
+                <ScalarProperty Name="passport_vidacha" ColumnName="passport_vidacha" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
+                <ScalarProperty Name="serialnum" ColumnName="serialnum" />
+                <ScalarProperty Name="order_comment" ColumnName="order_comment" />
+                <ScalarProperty Name="order_summ" ColumnName="order_summ" />
+                <ScalarProperty Name="estimated_close" ColumnName="estimated_close" />
+                <ScalarProperty Name="personAddres" ColumnName="personAddres" />
+                <ScalarProperty Name="cellPhone" ColumnName="cellPhone" />
+                <ScalarProperty Name="order_date" ColumnName="order_date" />
+                <ScalarProperty Name="order_num" ColumnName="order_num" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_SetAgreenmentToOrder" FunctionName="Хранилище popshopModel.usp_SetAgreenmentToOrder" />
+          <FunctionImportMapping FunctionImportName="usp_GetPrintConractById" FunctionName="Хранилище popshopModel.usp_GetPrintConractById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_GetPrintConractById_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="file_path" ColumnName="file_path" />
+                <ScalarProperty Name="agreement_type" ColumnName="agreement_type" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetContractById" FunctionName="Хранилище popshopModel.usp_GetContractById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_GetContractById_Result">
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
+                <ScalarProperty Name="order_num" ColumnName="order_num" />
+                <ScalarProperty Name="product_serial" ColumnName="product_serial" />
+                <ScalarProperty Name="order_summ" ColumnName="order_summ" />
+                <ScalarProperty Name="order_date" ColumnName="order_date" />
+                <ScalarProperty Name="estimated_close" ColumnName="estimated_close" />
+                <ScalarProperty Name="order_comment" ColumnName="order_comment" />
+                <ScalarProperty Name="path" ColumnName="path" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetOrderScan" FunctionName="Хранилище popshopModel.usp_GetOrderScan" />
+          <FunctionImportMapping FunctionImportName="usp_OrdersScanUpdate" FunctionName="Хранилище popshopModel.usp_OrdersScanUpdate" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
