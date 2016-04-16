@@ -531,5 +531,104 @@ namespace prospekt.tel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("usp_OrdersScanUpdate", idParameter, orderIdParameter, scanPathParameter);
         }
+    
+        public virtual int usp_kassa(Nullable<int> otype, Nullable<decimal> summ, string comment, Nullable<System.Guid> aspoper)
+        {
+            var otypeParameter = otype.HasValue ?
+                new ObjectParameter("otype", otype) :
+                new ObjectParameter("otype", typeof(int));
+    
+            var summParameter = summ.HasValue ?
+                new ObjectParameter("summ", summ) :
+                new ObjectParameter("summ", typeof(decimal));
+    
+            var commentParameter = comment != null ?
+                new ObjectParameter("comment", comment) :
+                new ObjectParameter("comment", typeof(string));
+    
+            var aspoperParameter = aspoper.HasValue ?
+                new ObjectParameter("aspoper", aspoper) :
+                new ObjectParameter("aspoper", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_kassa", otypeParameter, summParameter, commentParameter, aspoperParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> usp_kassa_GetSumm(Nullable<System.Guid> aspoper, Nullable<System.DateTime> rdate)
+        {
+            var aspoperParameter = aspoper.HasValue ?
+                new ObjectParameter("aspoper", aspoper) :
+                new ObjectParameter("aspoper", typeof(System.Guid));
+    
+            var rdateParameter = rdate.HasValue ?
+                new ObjectParameter("rdate", rdate) :
+                new ObjectParameter("rdate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("usp_kassa_GetSumm", aspoperParameter, rdateParameter);
+        }
+    
+        public virtual ObjectResult<usp_kassa_select_Result> usp_kassa_select(Nullable<int> otype, Nullable<System.DateTime> dbeg, Nullable<System.DateTime> dend, Nullable<System.Guid> aspoper)
+        {
+            var otypeParameter = otype.HasValue ?
+                new ObjectParameter("otype", otype) :
+                new ObjectParameter("otype", typeof(int));
+    
+            var dbegParameter = dbeg.HasValue ?
+                new ObjectParameter("dbeg", dbeg) :
+                new ObjectParameter("dbeg", typeof(System.DateTime));
+    
+            var dendParameter = dend.HasValue ?
+                new ObjectParameter("dend", dend) :
+                new ObjectParameter("dend", typeof(System.DateTime));
+    
+            var aspoperParameter = aspoper.HasValue ?
+                new ObjectParameter("aspoper", aspoper) :
+                new ObjectParameter("aspoper", typeof(System.Guid));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_kassa_select_Result>("usp_kassa_select", otypeParameter, dbegParameter, dendParameter, aspoperParameter);
+        }
+    
+        public virtual ObjectResult<usp_GetUserId_Result> usp_GetUserId(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_GetUserId_Result>("usp_GetUserId", nameParameter);
+        }
+    
+        public virtual ObjectResult<usp_GetKassaOperationsType_Result> usp_GetKassaOperationsType()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_GetKassaOperationsType_Result>("usp_GetKassaOperationsType");
+        }
+    
+        public virtual int usp_kassa_del(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_kassa_del", idParameter);
+        }
+    
+        public virtual ObjectResult<string> usp_SetContractStage(Nullable<int> id, Nullable<int> stage, Nullable<System.Guid> aspoper, Nullable<decimal> summa)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var stageParameter = stage.HasValue ?
+                new ObjectParameter("stage", stage) :
+                new ObjectParameter("stage", typeof(int));
+    
+            var aspoperParameter = aspoper.HasValue ?
+                new ObjectParameter("aspoper", aspoper) :
+                new ObjectParameter("aspoper", typeof(System.Guid));
+    
+            var summaParameter = summa.HasValue ?
+                new ObjectParameter("summa", summa) :
+                new ObjectParameter("summa", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("usp_SetContractStage", idParameter, stageParameter, aspoperParameter, summaParameter);
+        }
     }
 }

@@ -1,0 +1,72 @@
+﻿@* Представление список Касса *@
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <i class="fa fa-rub fa-fw"></i> Кассовые операции
+            <div class="btn-group" role="group" aria-label="..." style="padding-left:25px" id="ic-filt">
+                @*<button type="button" data-id="0" class="btn btn-xs btn-info active">Все договора</button>
+                    <button type="button" data-id="3" class="btn btn-xs btn-info">Активные договора</button>
+                    <button type="button" data-id="1002" class="btn btn-xs btn-info">Разорванные договора</button>
+                    <button type="button" data-id="1" class="btn btn-xs btn-info">На стадии формирования</button>*@
+                <button type="button" class="btn btn-xs btn-info" id="ki-setoperdate"><span class="fa fa-refresh"></span></button>
+                <input class="form-group-sm" type="date" style="height:22px" id="ki-operdate" />
+                
+            </div>
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                        Операции
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li>
+                            <a href="#" class="modalCont" data-ajaxpath="/kassa/insert/"><span class="fa fa-plus-circle fa-fw"></span> Новая операция</a>
+                        </li>
+                        @*<li>
+                                <a href="#">Показать архивные записи</a>
+                            </li>*@
+
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#"><span class="fa fa-file-excel-o fa-fw"></span> Отчёт по кассовым операциям</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            @*<div class="pull-right">
+                    <span class="fa fa-search fa-fw"></span>
+                    <input id="contractSearch" class="form-group-sm" type="text" placeholder="Поиск..." style="height:22px" autofocus />
+                </div>*@
+            <div class="pull-right">
+                <img id="preLoader" src="~/Content/img/preLoader.gif" hidden />
+            </div>
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <div id="kassatree" style="overflow-y:scroll;"></div>
+
+        </div>
+        <div class="panel-footer" style="padding-bottom: 25px;">
+            <div id="kassafoot"></div>
+        </div>
+
+        <!-- /.panel-body -->
+    </div>
+</div>
+<script>
+    $('#kassatree').height(window.innerHeight / 1.6);
+    Kassa.Init();
+    $('.modalCont').off().click(function (e) {
+        e.preventDefault();
+        var path = $(this).data('ajaxpath');
+        var title = $(this).text();
+        $.get(path, function (data) {
+            $('#mt').text(title);
+            $('#mb').empty().html(data);
+            $('#categoryMessages').modal({
+                keyboard: false,
+                backdrop: false
+            }, 'show');
+        });
+    });
+</script>

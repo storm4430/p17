@@ -11,17 +11,9 @@ namespace prospekt.tel.Models
 {
     using System;
     
-    public partial class usp_GetContractById_Result
+    public partial class usp_GetKassaOperationsType_Result
     {
-        public string FIO { get; set; }
-        public string product_name { get; set; }
-        public string order_num { get; set; }
-        public string product_serial { get; set; }
-        public decimal order_summ { get; set; }
-        public string order_date { get; set; }
-        public string estimated_close { get; set; }
-        public string order_comment { get; set; }
-        public string path { get; set; }
-        public int order_stage { get; set; }
+        public int id { get; set; }
+        public string operation { get; set; }
     }
 }

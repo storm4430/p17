@@ -497,6 +497,8 @@ function GetPrintContract(id) {
 
 // #endregion
 
+// #region ContractDetails
+
 ContractDetails = {
     GetContract: function (nodeElement, id) {
         $.get('/Contract/details?id=' + id, function (d) {
@@ -522,12 +524,28 @@ ContractDetails = {
                 $('#cd-OrderScan').text('Скан договора не обнаружен');
                 $('#cd-accept').hide();
             }
+            if (d.order_stage == 3 || d.order_stage == 1002) {
+                $('#cd-accept').hide();
+                $('#cd-scanupload').hide();
+            } else {
+                $('#cd-reject').hide();
+                $('#cd-prolong').hide();
+                $('#cd-sell').hide();
+            }
+        })
+    },
+
+    GetContractDetailsOnlyData: function (id) {
+        $.get('/api/Contracts?id=' + id, function (d) {
+            var t = d;
+            return t;
         })
     },
 
     ContactDetailsAction: function (action, id) {
         switch (action) {
             case (1): ContractDetails.UploadContractScan(id); break;
+            case (5): ContractDetails.AcceptContract(id); break;
             default: break;
         }
     },
@@ -544,6 +562,153 @@ ContractDetails = {
     },
 
     GetFullScan: function (s) {
-            window.open('/api/OrderScans?id=' + s);
+        window.open('/api/OrderScans?id=' + s);
+    },
+
+    AcceptContract: function (id) {
+        $.get('/Contract/AcceptContract/' + id, function (data) {
+            $('#mt').text('Провести договор');
+            $('#mb').empty().html(data);
+            $('#categoryMessages').modal({
+                keyboard: false,
+                backdrop: false
+            }, 'show');
+        })
+    },
+
+    AcceptContractData: function (id) {
+        var html = '';
+        $.get('/api/kassa/getsumm/?d=', function (d) {
+            $.get('/api/Contracts?id=' + id, function (s) {
+                console.log(s.order_summ > d);
+                if (s != null) {
+                    if (s.order_summ > d) {
+                        html = 'В данный момент в кассе находится ' + d + ' руб.,\
+                    для проведения операции требуется ' + s.order_summ + ' руб.\
+                    Внесите в кассу недостающую сумму!'
+                        $('#ac-alert').removeClass('alert-info').addClass('alert-danger').html(html);
+                        $('#ac-accept').attr('disabled', true)
+                    } else {
+                        html = 'В данный момент в кассе находится ' + d + ' руб.,\
+                    из кассы будет выдано:  ' + s.order_summ + ' руб.'
+                        $('#ac-alert').html(html);
+                        $('#ac-accept').attr('disabled', false).off().click(function () {
+                            var data = {
+                                Id:id,
+                                Stage:3
+                            };
+                            UpdateObject('api/Contracts/SetStage', data, 5, '');
+                        });
+                    }
+
+                }
+            })
+
+
+        })
     }
 }
+
+// #endregion
+
+// #region Kassa
+Kassa = {
+    Init: function () {
+        var tod = new Date
+        $('#ki-operdate').val(DateUtils.ToInputFormat(tod.toLocaleDateString()));
+        Kassa.GetOperDate('kassatree', DateUtils.ToInputFormat(tod.toLocaleDateString()));
+        $('#ki-setoperdate').off().click(function () {
+            Kassa.GetOperDate('kassatree', $('#ki-operdate').val())
+        })
+    },
+
+    GetOperDate: function (nodeElement, operdate) {
+        GetDataTable(
+        {
+            fields: [{
+                "operation": "Операция",
+                "summ": "Сумма",
+                "oper": "Автор",
+                "operdate": "Время",
+                "comment": "Комментарий",
+                //"order_summ": "Сумма",
+                //"estimated_close": "Срок",
+            }],
+            actions: [{
+                "Details": "'KassaDetails'",
+                "Delete": "'KassaDetails'",
+            }
+
+            ],
+            styles: [{
+                "cond": "summ < 0 "
+            }]
+        }, '/api/Kassa/GetOperDate?d=' + operdate, 15, nodeElement)
+    },
+
+    InitNewKassaOperation: function (nodeElement) {
+        $.get('api/Kassa/GetKassaOperationsType', function (d) {
+            $.each(d, function (key, item) {
+                $(nodeElement).append($('<option value="' + item.id + '">' + item.operation + '</option>'))
+            })
+        });
+
+        $('#updOperation').off().click(function () {
+            if ($('').val() == '' || $('').val() == '') {
+                return false;
+            } else {
+                var data = {
+                    OType: $('#i-op').val(),
+                    Summ: $('#i-summ').val(),
+                    Comment: $('#i-comment').val()
+                };
+                NewObject('api/Kassa/NewKassaOperation', data, 7, '');
+            }
+        })
+    },
+
+    DeleteKassa: function (id) {
+        DeleteObject('api/Kassa/KassaOperationDel/?id=' + id, 4, '')
+    },
+
+    SetSummForNodeElement: function () {
+        var tod = new Date;
+        $.get('api/Kassa/GetSumm/?d=' + tod.toLocaleDateString(), function (d) {
+            $('#mainorgsumm').text(d);
+        })
+    }
+
+
+
+
+}
+
+
+// #endregion
+
+// #region DateUtils
+DateUtils = {
+    ToInputFormat: function (localeDate) {//14.04.2016
+        var y = localeDate.substring(6, 10);
+        var m = localeDate.substring(3, 5);
+        var d = localeDate.substring(0, 2);
+        return y + '-' + m + '-' + d;
+    }
+}
+
+Messaging = {
+    ShowError: function (msg, oType) {
+        $.notify({
+            icon: 'glyphicon glyphicon-info-sign',
+            message: msg,
+        }, {
+            type: oType,
+            z_index: 9999,
+            offset: 50
+        });
+    }
+}
+
+
+// #endregion
+

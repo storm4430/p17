@@ -11,17 +11,13 @@ namespace prospekt.tel.Models
 {
     using System;
     
-    public partial class usp_GetContractById_Result
+    public partial class usp_kassa_select_Result
     {
-        public string FIO { get; set; }
-        public string product_name { get; set; }
-        public string order_num { get; set; }
-        public string product_serial { get; set; }
-        public decimal order_summ { get; set; }
-        public string order_date { get; set; }
-        public string estimated_close { get; set; }
-        public string order_comment { get; set; }
-        public string path { get; set; }
-        public int order_stage { get; set; }
+        public decimal summ { get; set; }
+        public string operation { get; set; }
+        public string operdate { get; set; }
+        public string oper { get; set; }
+        public string comment { get; set; }
+        public int Id { get; set; }
     }
 }

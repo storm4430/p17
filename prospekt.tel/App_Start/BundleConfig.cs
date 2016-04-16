@@ -27,6 +27,7 @@ namespace prospekt.tel
                       "~/Scripts/respond.js",
                       "~/Scripts/metisMenu.js",
                       "~/Scripts/sb-admin-2.js",
+                      "~/Scripts/bootstrap-notify.js",
                       "~/Scripts/App/int.navigation.min.js",
                       "~/Scripts/App/DataTable.min.js",
                       "~/Scripts/App/Categories.min.js"));

@@ -24,5 +24,12 @@ namespace prospekt.tel.Common
             var res = udl.orgId;
             return res;
         }
+
+        public static string GetUserId(string uName)
+        {
+            ApplicationDbContext adb = new ApplicationDbContext();
+            var udl = adb.Users.Where(x => x.UserName == uName).FirstOrDefault();
+            return udl.Id;
+        }
     }
 }

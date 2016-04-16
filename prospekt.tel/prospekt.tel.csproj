@@ -188,6 +188,7 @@
     <Compile Include="Common\Reports.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\ContractsController.cs" />
+    <Compile Include="Controllers\Api\KassaController.cs" />
     <Compile Include="Controllers\Api\OrderScansController.cs" />
     <Compile Include="Controllers\Api\OrgsController.cs" />
     <Compile Include="Controllers\Api\PersonFullScansController.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ContractController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KassaController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrgController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
@@ -270,6 +272,9 @@
     <Compile Include="Models\usp_GetContractPrepare_Result.cs">
       <DependentUpon>MainModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\usp_GetKassaOperationsType_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\usp_GetPersonById_Result.cs">
       <DependentUpon>MainModel.tt</DependentUpon>
     </Compile>
@@ -288,10 +293,23 @@
     <Compile Include="Models\usp_GetSubCategoryById_Result.cs">
       <DependentUpon>MainModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\usp_GetUserId_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\usp_kassa_select_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\usp_SetContractStage_Result.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\usp_SetContractStage_Result1.cs">
+      <DependentUpon>MainModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-notify.css" />
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -305,6 +323,8 @@
     <Content Include="Content\Site.min.css">
       <DependentUpon>Site.css</DependentUpon>
     </Content>
+    <Content Include="Content\styles\alert-bangtidy.css" />
+    <Content Include="Content\styles\alert-blackgloss.css" />
     <Content Include="Content\timeline.css" />
     <Content Include="Content\Typeahead-BS3-css.css" />
     <Content Include="favicon.ico" />
@@ -359,6 +379,7 @@
     </Content>
     <Content Include="Scripts\App\typeahead.bundle.js" />
     <Content Include="Scripts\bloodhound.js" />
+    <Content Include="Scripts\bootstrap-notify.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\button.js" />
@@ -454,6 +475,9 @@
     <Content Include="Views\Contract\Insert.cshtml" />
     <Content Include="Views\Contract\Details.cshtml" />
     <Content Include="Views\Contract\ScanUpload.cshtml" />
+    <Content Include="Views\Contract\AcceptContract.cshtml" />
+    <Content Include="Views\Kassa\Index.cshtml" />
+    <Content Include="Views\Kassa\Insert.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

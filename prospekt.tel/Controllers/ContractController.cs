@@ -29,6 +29,12 @@ namespace prospekt.tel.Controllers
             return PartialView();
         }
 
+        public ActionResult AcceptContract(int id)
+        {
+            ViewBag.Id = id;
+            return PartialView();
+        }
+
         public ActionResult Insert()
         {
             return PartialView();

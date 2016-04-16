@@ -29,7 +29,8 @@ $('.actionhref').click(function (e) {
     e.preventDefault();
 })
 
-$('.modalCont').click(function () {
+$('.modalCont').click(function (e) {
+    e.preventDefault();
     var path = $(this).data('ajaxpath');
     $('#ModMessages').modal({
         keyboard: false

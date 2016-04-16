@@ -64,7 +64,7 @@
     //    tf += '<th>' + i + '</th>'
     //}
     //$('#mtFooter').append(tf);
-    //ko.cleanNode(document.getElementById('subContainer_' + container));
+    ko.cleanNode(document.getElementById('subContainer_' + container));
     ko.applyBindings(new GetAssignments(apiPath), document.getElementById('subContainer_' + container));
 
 }
@@ -86,6 +86,7 @@ function GetAssignments(dataPath) { //'/api/assignments/2036531'
             case ('Category'): { CategoryDelete(assign.id) }; break;
             case ('subCategory'): { SubCategoryDelete(assign.id) }; break;
             case ('Product'): { ProductDelete(assign.id) }; break;
+            case ('KassaDetails'): { Kassa.DeleteKassa(assign.Id) }; break;
             default:
         }
     }
@@ -138,7 +139,11 @@ function NewObject(dataURL, obj, objEntity, opt) {
                     case (4): break;
                     case (5): GetOrgs(''); break;
                     case (6): GetContracts(''); GetPrintContract(p); opt(); break;
+                    case (7): Kassa.SetSummForNodeElement(); Kassa.Init(); $('#categoryMessages').modal('hide'); break;
                 }
+            },
+            error: function (response) {
+                Messaging.ShowError(response.responseJSON.Message, 'danger')
             }
         });
 };
@@ -155,6 +160,9 @@ function NewInvocObject(dataURL, obj, objEntity, opt) {
                     case (4): $('#categoryMessages').modal('hide'); break;
                     case (7): ContractDetails.GetContractDetails(d); $('#categoryMessages').modal('hide'); break;
                 }
+            },
+            error: function (response) {
+                Messaging.ShowError(response.responseJSON.Message, 'danger')
             }
         });
 }
@@ -164,7 +172,7 @@ function UpdateObject(dataURL, obj, objEntity, opt) {
         {
             method: "PUT",
             data: obj,
-            success: function () {
+            success: function (response) {
                 switch (objEntity) {
                     case (1): GetCategories(''); break;
                     case (2): GetSubCategories(opt, ''); break;
@@ -172,7 +180,11 @@ function UpdateObject(dataURL, obj, objEntity, opt) {
                     case (4): FillPersonCard(opt, function () {
 
                     }); break;
+                    case (5): Messaging.ShowError(response, 'success'); Kassa.SetSummForNodeElement(); GetContracts('', $('#ic-filt button').data('id')); $('#categoryMessages').modal('hide'); break;
                 }
+            },
+            error: function (response) {
+                Messaging.ShowError(response.responseJSON.Message, 'danger')
             }
         });
 }
@@ -186,7 +198,11 @@ function DeleteObject(dataURL, objEntity, opt) {
                     case (1): GetCategories(''); break;
                     case (2): GetSubCategories(opt, ''); break;
                     case (3): Getproducts(opt, ''); break;
+                    case (4): Kassa.SetSummForNodeElement(); Kassa.Init(); break;
                 }
+            },
+            error: function (response) {
+                Messaging.ShowError(response.responseJSON.Message, 'danger')
             }
         });
 }

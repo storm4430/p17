@@ -16,6 +16,7 @@ namespace prospekt.tel.Controllers.Api
     {
         private psEnt db = new psEnt();
 
+        #region HttpGet
         public IHttpActionResult Get(string substr, int stage)
         {
             Guid userOrg = Common.DataHelper.GetUserOrg(User.Identity.Name);
@@ -52,7 +53,9 @@ namespace prospekt.tel.Controllers.Api
                 return BadRequest(ex.InnerException.Message);
             }
         }
-
+        #endregion
+        
+        #region HttpPost
         [HttpPost]
         public IHttpActionResult Post(NewContract newCont)
         {
@@ -73,19 +76,30 @@ namespace prospekt.tel.Controllers.Api
                 return BadRequest(ex.InnerException.Message);
             }
         }
+        #endregion
+
+        #region HttpPut
+        [HttpPut]
+        [Route("api/Contracts/SetStage")]
+        public IHttpActionResult SetStage(ContractStage s)
+        {
+            try
+            {
+                var asp = Guid.Parse(Common.DataHelper.GetUserId(User.Identity.Name));
+                var result = db.usp_SetContractStage(s.Id, s.Stage, asp, null).FirstOrDefault();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException.Message);
+            }
+        }
+        #endregion
+
     }
 
     public class NewContract
     {
-        //@personPK int,
-        //@productPK int,
-        //@order_sum numeric(11,2),
-        //@order_date datetime,
-        //@estimated_close datetime,
-        //@product_serial varchar(40),
-        //@contract_comment varchar(2048),
-        //@order_org uniqueidentifier
-
         public int PersonPK { get; set; }
         public int ProductPK { get; set; }
         public decimal order_sum { get; set; }
@@ -94,6 +108,13 @@ namespace prospekt.tel.Controllers.Api
         public string product_serial { get; set; }
         public string contract_comment { get; set; }
         public Guid order_org { get; set; }
+
+    }
+
+    public class ContractStage
+    {
+        public int Id { get; set; }
+        public int Stage { get; set; }
 
     }
 }

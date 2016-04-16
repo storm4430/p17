@@ -64,6 +64,7 @@
         <Function Name="usp_GetContractPrepare" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
+        <Function Name="usp_GetKassaOperationsType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin" />
         <Function Name="usp_GetOrderScan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
@@ -91,6 +92,25 @@
         <Function Name="usp_GetSex" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin" />
         <Function Name="usp_GetSubCategoryById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
           <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_kassa" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="otype" Type="int" Mode="In" />
+          <Parameter Name="summ" Type="numeric" Mode="In" />
+          <Parameter Name="comment" Type="varchar" Mode="In" />
+          <Parameter Name="aspoper" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="usp_kassa_del" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_kassa_GetSumm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="aspoper" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="rdate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="usp_kassa_select" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="otype" Type="int" Mode="In" />
+          <Parameter Name="dbeg" Type="datetime" Mode="In" />
+          <Parameter Name="dend" Type="datetime" Mode="In" />
+          <Parameter Name="aspoper" Type="uniqueidentifier" Mode="In" />
         </Function>
         <Function Name="usp_OrdersScanUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -146,6 +166,12 @@
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="path" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="usp_SetContractStage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="stage" Type="int" Mode="In" />
+          <Parameter Name="aspoper" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="summa" Type="numeric" Mode="In" />
+        </Function>
         <Function Name="usp_SubCategories_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="admin">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="user" Type="varchar" Mode="In" />
@@ -159,6 +185,9 @@
         <Function Name="usp_GetAllUserRoles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="usp_GetAllUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Substr" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="usp_GetUserId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="Хранилище popshopModelContainer">
           <EntitySet Name="sex" EntityType="Self.sex" Schema="admin" store:Type="Tables" />
@@ -326,6 +355,35 @@
             <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="orderId" Mode="In" Type="Int32" />
             <Parameter Name="scanPath" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_kassa">
+            <Parameter Name="otype" Mode="In" Type="Int32" />
+            <Parameter Name="summ" Mode="In" Type="Decimal" />
+            <Parameter Name="comment" Mode="In" Type="String" />
+            <Parameter Name="aspoper" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="usp_kassa_GetSumm" ReturnType="Collection(Decimal)">
+            <Parameter Name="aspoper" Mode="In" Type="Guid" />
+            <Parameter Name="rdate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="usp_kassa_select" ReturnType="Collection(popshopModel.usp_kassa_select_Result)">
+            <Parameter Name="otype" Mode="In" Type="Int32" />
+            <Parameter Name="dbeg" Mode="In" Type="DateTime" />
+            <Parameter Name="dend" Mode="In" Type="DateTime" />
+            <Parameter Name="aspoper" Mode="In" Type="Guid" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetUserId" ReturnType="Collection(popshopModel.usp_GetUserId_Result)">
+          <Parameter Name="name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetKassaOperationsType" ReturnType="Collection(popshopModel.usp_GetKassaOperationsType_Result)" />
+          <FunctionImport Name="usp_kassa_del">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_SetContractStage" ReturnType="Collection(String)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="stage" Mode="In" Type="Int32" />
+            <Parameter Name="aspoper" Mode="In" Type="Guid" />
+            <Parameter Name="summa" Mode="In" Type="Decimal" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="usp_GetAllCategories_Result">
@@ -517,7 +575,32 @@
           <Property Type="String" Name="order_date" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="estimated_close" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="order_comment" Nullable="true" MaxLength="1024" />
-          <Property Type="String" Name="path" Nullable="false" MaxLength="512" />
+          <Property Type="String" Name="path" Nullable="true" MaxLength="512" />
+          <Property Type="Int32" Name="order_stage" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="usp_kassa_select_Result">
+          <Property Type="Decimal" Name="summ" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="operation" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="operdate" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="oper" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="comment" Nullable="true" MaxLength="4096" />
+          <Property Type="Int32" Name="Id" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="usp_GetUserId_Result">
+          <Property Type="String" Name="id" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="FIO" Nullable="true" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="orgName" Nullable="true" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="usp_GetKassaOperationsType_Result">
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="operation" Nullable="true" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="usp_SetContractStage_Result">
+          <Property Type="String" Name="Column1" Nullable="true" MaxLength="512" />
+        </ComplexType>
+        <ComplexType Name="usp_SetContractStage_Result1">
+          <Property Type="String" Name="Column1" Nullable="true" MaxLength="512" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -790,11 +873,46 @@
                 <ScalarProperty Name="estimated_close" ColumnName="estimated_close" />
                 <ScalarProperty Name="order_comment" ColumnName="order_comment" />
                 <ScalarProperty Name="path" ColumnName="path" />
+                <ScalarProperty Name="order_stage" ColumnName="order_stage" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="usp_GetOrderScan" FunctionName="Хранилище popshopModel.usp_GetOrderScan" />
           <FunctionImportMapping FunctionImportName="usp_OrdersScanUpdate" FunctionName="Хранилище popshopModel.usp_OrdersScanUpdate" />
+          <FunctionImportMapping FunctionImportName="usp_kassa" FunctionName="Хранилище popshopModel.usp_kassa" />
+          <FunctionImportMapping FunctionImportName="usp_kassa_GetSumm" FunctionName="Хранилище popshopModel.usp_kassa_GetSumm" />
+          <FunctionImportMapping FunctionImportName="usp_kassa_select" FunctionName="Хранилище popshopModel.usp_kassa_select">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_kassa_select_Result">
+                <ScalarProperty Name="summ" ColumnName="summ" />
+                <ScalarProperty Name="operation" ColumnName="operation" />
+                <ScalarProperty Name="operdate" ColumnName="operdate" />
+                <ScalarProperty Name="oper" ColumnName="oper" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetUserId" FunctionName="Хранилище popshopModel.usp_GetUserId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_GetUserId_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="orgName" ColumnName="orgName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetKassaOperationsType" FunctionName="Хранилище popshopModel.usp_GetKassaOperationsType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="popshopModel.usp_GetKassaOperationsType_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="operation" ColumnName="operation" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_kassa_del" FunctionName="Хранилище popshopModel.usp_kassa_del" />
+          <FunctionImportMapping FunctionImportName="usp_SetContractStage" FunctionName="Хранилище popshopModel.usp_SetContractStage" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
